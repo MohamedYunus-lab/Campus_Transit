@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-surface text-on-surface font-sans;
+  }
+}
+
+@layer components {
+  /* Primary Buttons - Solid Blue */
+  .btn-primary {
+    @apply bg-primary-container text-white px-6 py-3 rounded-lg hover:bg-primary transition-all font-semibold shadow-sm hover:shadow-md;
+  }
+  
+  /* Secondary Buttons - Ghost/Outlined */
+  .btn-secondary {
+    @apply border-2 border-outline-variant text-on-surface px-6 py-3 rounded-lg hover:bg-surface-container transition-all font-medium;
+  }
+  
+  .btn-danger {
+    @apply bg-error text-white px-6 py-3 rounded-lg hover:bg-error-dark transition-all font-semibold;
+  }
+  
+  /* Card with new shadow */
+  .card {
+    @apply bg-surface-container-lowest rounded-xl shadow-card p-6 hover:shadow-card-hover transition-shadow;
+  }
+  
+  /* Elevated Card */
+  .card-elevated {
+    @apply bg-surface-container-lowest rounded-xl shadow-elevated p-6;
+  }
+  
+  /* Input Fields */
+  .input {
+    @apply w-full px-4 py-3 border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary-container focus:border-primary-container outline-none bg-surface-container-lowest text-body-lg;
+  }
+  
+  .label {
+    @apply block text-label-bold text-on-surface-variant mb-2;
+  }
+  
+  /* Status Badges - Pill Shaped */
+  .badge-active {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-badge-cap bg-success-light text-success-dark border border-success;
+  }
+  
+  .badge-maintenance {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-badge-cap bg-error-light text-error-dark border border-error;
+  }
+  
+  .badge-primary {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-badge-cap bg-primary-100 text-primary-700 border border-primary-200;
+  }
+  
+  .badge-secondary {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-badge-cap bg-secondary-100 text-secondary-700 border border-secondary-100;
+  }
+  
+  /* Route Color Badges */
+  .route-badge-blue {
+    @apply inline-flex items-center px-3 py-1.5 rounded-full text-badge-cap font-bold bg-primary-100 text-primary-700;
+  }
+  
+  .route-badge-orange {
+    @apply inline-flex items-center px-3 py-1.5 rounded-full text-badge-cap font-bold bg-tertiary-100 text-tertiary-700;
+  }
+  
+  .route-badge-purple {
+    @apply inline-flex items-center px-3 py-1.5 rounded-full text-badge-cap font-bold bg-secondary-100 text-secondary-700;
+  }
+}
+
+/* Leaflet map container */
+.leaflet-container {
+  height: 100%;
+  width: 100%;
+  border-radius: 0.75rem;
+}

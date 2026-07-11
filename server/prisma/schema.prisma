@@ -1,0 +1,83 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id           Int      @id @default(autoincrement())
+  name         String
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model BusRoute {
+  id             Int             @id @default(autoincrement())
+  routeName      String
+  startPoint     String
+  endPoint       String
+  totalStops     Int             @default(0)
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  boardingPoints BoardingPoint[]
+  buses          Bus[]
+}
+
+model BoardingPoint {
+  id        Int           @id @default(autoincrement())
+  name      String
+  latitude  Float
+  longitude Float
+  imageUrl  String?
+  routeId   Int
+  route     BusRoute      @relation(fields: [routeId], references: [id], onDelete: Cascade)
+  schedules BusSchedule[]
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+}
+
+model Driver {
+  id           Int      @id @default(autoincrement())
+  name         String
+  photoUrl     String?
+  phoneNumber  String
+  idCardNumber String   @unique
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  buses        Bus[]
+}
+
+model Bus {
+  id        Int           @id @default(autoincrement())
+  busNumber String        @unique
+  capacity  Int
+  driverId  Int
+  routeId   Int
+  driver    Driver        @relation(fields: [driverId], references: [id], onDelete: Cascade)
+  route     BusRoute      @relation(fields: [routeId], references: [id], onDelete: Cascade)
+  schedules BusSchedule[]
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+}
+
+model BusSchedule {
+  id              Int           @id @default(autoincrement())
+  busId           Int
+  boardingPointId Int
+  arrivalTime     String
+  departureTime   String
+  bus             Bus           @relation(fields: [busId], references: [id], onDelete: Cascade)
+  boardingPoint   BoardingPoint @relation(fields: [boardingPointId], references: [id], onDelete: Cascade)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  @@unique([busId, boardingPointId])
+}
