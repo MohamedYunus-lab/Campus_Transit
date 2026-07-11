@@ -10,13 +10,6 @@ A comprehensive full-stack web application for managing college bus operations, 
 
 ---
 
-## 📚 Documentation
-
-- **[PROJECT_DOCUMENTATION.md](./PROJECT_DOCUMENTATION.md)** - Complete project overview and all development history
-- **[QUICKSTART.md](./QUICKSTART.md)** - Get running in 2 minutes
-
----
-
 ## 🎯 Project Purpose
 
 The Sairam Bus Connect system helps:
@@ -76,8 +69,8 @@ Runs on: `http://localhost:5173`
 Open: `http://localhost:5173/`
 
 **Login Credentials:**
-- Email: `admin@college.edu`
-- Password: `admin123`
+- Email: `----------`
+- Password: `*******`
 
 ---
 
