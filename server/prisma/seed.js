@@ -288,8 +288,13 @@ async function main() {
 
 main()
   .catch((e) => {
-    console.error('❌ Error seeding database:', e);
-    process.exit(1);
+    if (e.code === 'P2002') {
+      console.log('✅ Database is already seeded (Unique constraint failed). Skipping seed.');
+      process.exit(0);
+    } else {
+      console.error('❌ Error seeding database:', e);
+      process.exit(1);
+    }
   })
   .finally(async () => {
     await prisma.$disconnect();
