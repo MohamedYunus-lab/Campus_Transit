@@ -21,12 +21,13 @@ const ImageUploadWidget = ({ onImageUpload, currentImage, label = 'Upload Landma
       return;
     }
 
-    // Show preview immediately
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      setPreview(event.target.result);
-    };
-    reader.readAsDataURL(file);
+    // Read file as Base64 first
+    const base64Data = await new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = (event) => resolve(event.target.result);
+      reader.readAsDataURL(file);
+    });
+    setPreview(base64Data);
 
     // Upload to Cloudinary
     setUploading(true);
@@ -36,13 +37,8 @@ const ImageUploadWidget = ({ onImageUpload, currentImage, label = 'Upload Landma
       const formData = new FormData();
       formData.append('file', file);
       
-      // Using unsigned upload - no backend needed!
-      // You need to create an upload preset in Cloudinary dashboard
-      // For now, we'll use data URL as fallback
-      
-      // Option 1: Use unsigned upload (recommended)
-      const CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD || 'demo'; // Set in .env
-      const UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_PRESET || ''; // Set in .env
+      const CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD || 'demo'; 
+      const UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_PRESET || ''; 
       
       if (UPLOAD_PRESET) {
         formData.append('upload_preset', UPLOAD_PRESET);
@@ -63,13 +59,13 @@ const ImageUploadWidget = ({ onImageUpload, currentImage, label = 'Upload Landma
         onImageUpload(data.secure_url);
       } else {
         // Fallback: use data URL
-        onImageUpload(preview);
+        onImageUpload(base64Data);
       }
     } catch (error) {
       console.error('Upload error:', error);
       setError('Upload failed. Using local preview.');
       // Fallback to data URL
-      onImageUpload(preview);
+      onImageUpload(base64Data);
     } finally {
       setUploading(false);
     }
