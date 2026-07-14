@@ -22,7 +22,7 @@ echo Open your browser and go to:
 echo http://localhost:5173/
 echo.
 echo Login with:
-echo Email:    admin@college.edu
-echo Password: admin123
+echo Email:   // your email for admin login
+echo Password: // your password for admin login
 echo ==========================================
 pause
